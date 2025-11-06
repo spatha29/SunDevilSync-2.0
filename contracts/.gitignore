@@ -1,0 +1,19 @@
+node_modules/
+cache/
+artifacts/
+deployments/
+coverage/
+coverage.json
+typechain/
+typechain-types/
+
+# Hardhat files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
