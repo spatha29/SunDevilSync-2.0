@@ -274,32 +274,16 @@ console.log(metadata);
 
 ```
 Blockchain-project/
-├── contracts/                    # ✅ Smart contracts (IMPLEMENTED)
+├── contracts/
 │   ├── contracts/
-│   │   ├── AchievementSBT.sol   # Non-transferable achievement NFTs
-│   │   └── Collectible721.sol   # Transferable collectible NFTs
-│   ├── test/                     # Comprehensive test suites
-│   ├── scripts/                  # Deployment scripts
-│   ├── hardhat.config.js        # Hardhat configuration
-│   └── README.md                # Detailed contract documentation
-│
-├── app/                          # 🚧 Application (IN PROGRESS)
-│   ├── backend/                 # Node.js API (skeleton only)
-│   │   ├── src/
-│   │   │   ├── models/          # MongoDB schemas (defined)
-│   │   │   ├── routes/          # API endpoints (defined)
-│   │   │   ├── services/        # Blockchain/IPFS services (defined)
-│   │   │   └── server.js        # Express server (not functional)
-│   │   └── package.json
-│   │
-│   └── frontend/                # React app (skeleton only)
-│       ├── src/
-│       │   ├── components/      # UI components (basic)
-│       │   ├── pages/           # Route pages (placeholders)
-│       │   └── contexts/        # React contexts (defined)
-│       └── package.json
-│
-└── README.md / README2.md       # Project documentation
+│   │   ├── AchievementSBT.sol
+│   │   └── Collectible721.sol
+│   ├── test/
+│   ├── scripts/
+│   ├── hardhat.config.js
+│   └── README.md
+└── README.md / README2.md
+
 ```
 
 ---
