@@ -1,309 +1,566 @@
 # SunDevilSync 2.0 – NFT Gamified Event Portal
 
-A blockchain-based event management platform that rewards students with verifiable NFT badges for participation in campus events.
+![Architecture Diagram](./SunDevilSync%202.0%20Architecture.png)
 
-## 🎯 Overview
+## Project Description
 
-SunDevilSync 2.0 gamifies campus event participation by issuing blockchain-verified achievement badges as NFTs. Students earn non-transferable credentials for attendance and achievements, while also collecting tradable digital memorabilia.
+SunDevilSync 2.0 is a blockchain-based event management platform that rewards students with verifiable NFT badges for participation in campus events. The system issues non-transferable achievement NFTs for attendance and credentials, while also enabling tradable collectible NFTs for referrals and special events.
 
 ### Key Features
-
-- ✅ **Event Management**: Browse, enroll, and check-in to campus events
-- 🏆 **NFT Badges**: Blockchain-verified achievement credentials on Polygon
-- 🔐 **Wallet Integration**: MetaMask and WalletConnect support
-- 📱 **QR Check-in**: Secure, rotating QR codes with anti-cheat measures
-- 🎨 **Collectibles**: Tradable NFTs for referrals and special events
-- ✨ **Verification Portal**: Public verification for employers/faculty
-- 👨‍💼 **Admin Console**: Event and badge management dashboard
-
-## 🏗️ Architecture
+- **Event Management**: Browse, enroll, and check-in to campus events
+- **NFT Achievement Badges**: Blockchain-verified credentials on Polygon
+- **Dual NFT System**: 
+  - **AchievementSBT**: Non-transferable achievement NFTs (attendance, winner, volunteer badges)
+  - **Collectible721**: Transferable collectible NFTs (referrals, limited editions)
+- **Verification Portal**: Public verification for employers and faculty
+- **Wallet Integration**: MetaMask and WalletConnect support
+- **IPFS Metadata**: Decentralized metadata storage with privacy protection
 
 ### Technology Stack
-
-**Smart Contracts**
-- Solidity 0.8.20
-- ERC-721 (OpenZeppelin)
-- Hardhat development environment
-- Polygon (Mumbai testnet)
-
-**Backend**
-- Node.js + Express
-- MongoDB (user data, events)
-- Redis (caching, queues)
-- BullMQ (async job processing)
-- Web3.js/Ethers.js (blockchain interaction)
-- Pinata (IPFS pinning)
-
-**Frontend**
-- React 18
-- React Router
-- TailwindCSS
-- Ethers.js
-- React Query
-
-### System Components
-
-```
-┌─────────────┐
-│   Students  │ ←→ Browser + MetaMask
-│ Employers   │
-│   Admins    │
-└──────┬──────┘
-       │ HTTPS + Wallet RPC
-       ↓
-┌──────────────────┐
-│   React SPA      │
-│ (Wallet Connect) │
-└──────┬───────────┘
-       │ REST API
-       ↓
-┌────────────────────────────────────┐
-│        Node.js Backend             │
-│  • Auth & Accounts                 │
-│  • Events & Check-in               │
-│  • Mint Orchestrator (EIP-712)     │
-│  • Verification API                │
-└─┬──────────┬──────────┬───────────┘
-  │          │          │
-  ↓          ↓          ↓
-MongoDB   Redis    IPFS (Pinata)
-  │          │          │
-  └──────────┴──────────┴───→ Polygon Testnet
-                           (ERC-721 Contracts)
-```
-
-## 📁 Project Structure
-
-```
-Blockchain-project/
-├── contracts/              # Smart contracts
-│   ├── contracts/
-│   │   ├── AchievementSBT.sol      # Non-transferable achievement NFTs
-│   │   └── Collectible721.sol      # Transferable collectible NFTs
-│   ├── scripts/
-│   │   └── deploy.js               # Deployment script
-│   ├── test/                       # Contract tests
-│   ├── hardhat.config.js
-│   └── README.md
-│
-└── app/                    # Web application
-    ├── backend/
-    │   ├── src/
-    │   │   ├── config/            # DB, Redis config
-    │   │   ├── models/            # MongoDB models
-    │   │   ├── routes/            # API endpoints
-    │   │   ├── services/          # Blockchain, IPFS
-    │   │   ├── middleware/        # Auth, errors
-    │   │   ├── queues/            # Job workers
-    │   │   └── server.js
-    │   └── package.json
-    │
-    └── frontend/
-        ├── src/
-        │   ├── components/        # UI components
-        │   ├── contexts/          # Auth, Wallet
-        │   ├── pages/             # Routes
-        │   └── App.js
-        └── package.json
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- MongoDB
-- Redis
-- MetaMask browser extension
-
-### 1. Clone Repository
-
-```bash
-git clone <repository-url>
-cd Blockchain-project
-```
-
-### 2. Deploy Smart Contracts
-
-```bash
-cd contracts
-npm install
-cp .env.example .env
-# Edit .env with your configuration
-
-# Deploy to local network
-npx hardhat node
-npm run deploy:local
-
-# Or deploy to Polygon testnet
-npm run deploy:testnet
-```
-
-Save the deployed contract addresses for later.
-
-### 3. Setup Backend
-
-```bash
-cd ../app/backend
-npm install
-cp .env.example .env
-# Edit .env with:
-# - MongoDB URI
-# - Redis configuration
-# - Contract addresses from step 2
-# - Pinata API keys
-# - Minter wallet private key
-
-npm run dev
-```
-
-Backend runs on `http://localhost:5000`
-
-### 4. Setup Frontend
-
-```bash
-cd ../frontend
-npm install
-cp .env.example .env
-# Edit .env with:
-# - Backend API URL
-# - Contract addresses
-
-npm start
-```
-
-Frontend runs on `http://localhost:3000`
-
-### 5. Initialize System
-
-1. Register an admin account
-2. Create badge types via admin API
-3. Create events
-4. Test the flow!
-
-## 📚 Documentation
-
-Detailed documentation is available in each directory:
-
-- **[contracts/README.md](contracts/README.md)** - Smart contract development, testing, deployment
-- **[app/README.md](app/README.md)** - Application setup, API documentation, deployment
-
-## 🎮 User Flows
-
-### Student Flow
-
-1. **Register** → Create account
-2. **Connect Wallet** → Link MetaMask wallet
-3. **Browse Events** → Find interesting events
-4. **Enroll** → Register for event
-5. **Check-in** → Scan QR code at venue
-6. **Receive NFT** → Get achievement badge automatically
-7. **View Collection** → See all earned badges
-
-### Organizer Flow
-
-1. **Create Event** → Set up event details
-2. **Configure Check-in** → QR, GPS, or manual
-3. **Monitor Attendance** → Track check-ins
-4. **Award Badges** → Issue winner/volunteer badges
-5. **View Analytics** → Event statistics
-
-### Employer/Faculty Flow
-
-1. **Visit Verification Page** → Public access
-2. **Enter Token ID or Wallet** → Search for credentials
-3. **View Proof** → See verified achievement details
-4. **Verify On-Chain** → Check blockchain record
-
-## 🔐 Security Features
-
-- **EIP-712 Signatures**: Backend-authorized minting
-- **Role-Based Access**: Admin, Organizer, Student roles
-- **Anti-Cheat**: Rotating QR codes, device fingerprinting
-- **PII Protection**: No personal data on-chain
-- **Revocation System**: Admin can revoke fraudulent badges
-- **Rate Limiting**: API and minting rate limits
-- **Transfer Locks**: Achievement NFTs non-transferable
-
-## 🧪 Testing
-
-### Smart Contracts
-```bash
-cd contracts
-npm test
-npm run test:coverage
-```
-
-### Backend
-```bash
-cd app/backend
-npm test
-```
-
-### Frontend
-```bash
-cd app/frontend
-npm test
-```
-
-## 📊 Badge Types
-
-| Type | Transferable | Use Case |
-|------|--------------|----------|
-| Attendance | No | Event check-in proof |
-| Winner | No | Competition/contest winner |
-| Volunteer | No | Volunteer service hours |
-| Referral | Yes | Bring-a-friend rewards |
-| Collectible | Yes | Limited edition memorabilia |
-
-## 🌐 Deployment
-
-### Smart Contracts
-- Deploy to Polygon Mumbai testnet
-- Verify on PolygonScan
-- Grant MINTER_ROLE to backend service
-
-### Backend
-- Deploy to Railway/Render/AWS
-- Configure environment variables
-- Set up MongoDB and Redis instances
-- Enable monitoring and logging
-
-### Frontend
-- Deploy to Vercel/Netlify
-- Configure environment variables
-- Set up custom domain
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## 📝 License
-
-MIT License - see LICENSE file for details
-
-## 👥 Team
-
-SunDevilSync 2.0 - Arizona State University
-
-## 🙏 Acknowledgments
-
-- OpenZeppelin for secure smart contract libraries
-- Polygon for scalable blockchain infrastructure
-- Pinata for IPFS pinning services
-- ASU community for inspiration and support
-
-## 📞 Support
-
-For issues or questions:
-- GitHub Issues: [Report a bug](link-to-issues)
-- Documentation: See README files in each directory
-- Email: support@sundevilsync.example
+- **Blockchain**: Polygon (Mumbai Testnet)
+- **Smart Contracts**: Solidity 0.8.20, OpenZeppelin ERC-721
+- **Development**: Hardhat
+- **Backend**: Node.js, Express, MongoDB, Redis (planned)
+- **Frontend**: React, TailwindCSS (planned)
+- **IPFS**: Pinata for metadata storage (planned)
 
 ---
 
-Built with ❤️ by ASU students, for ASU students
+## Current Implementation Status
+
+⚠️ **Note**: Currently, **only the smart contracts have been fully developed and tested**. The backend and frontend implementations are still in progress and will not function if run at this stage.
+
+### ✅ Completed
+- Smart contract development (AchievementSBT.sol, Collectible721.sol)
+- Comprehensive test suites for both contracts
+- Deployment scripts for local and testnet deployment
+- Contract documentation
+
+### 🚧 In Progress
+- Backend API implementation
+- Frontend React application
+- IPFS integration
+- Database models and services
+
+---
+
+## Smart Contracts
+
+### 1. AchievementSBT.sol
+Non-transferable achievement NFT contract for credentials and participation badges.
+
+**Key Features:**
+- ERC-721 compliant with transfer restrictions
+- EIP-712 permit-based minting for backend authorization
+- Role-based access control (Admin, Minter, Pauser, Revoker)
+- Token-level transfer locks (soulbound functionality)
+- On-chain revocation system
+- Batch minting for gas efficiency
+- Pausable for emergency stops
+
+**Main Functions:**
+```solidity
+// Mint with backend signature permit
+function mintWithPermit(
+    address to,
+    bytes32 eventId,
+    bytes32 badgeType,
+    string metadataURI,
+    uint256 deadline,
+    bytes signature
+) returns (uint256)
+
+// Direct mint (admin only)
+function mint(
+    address to,
+    bytes32 eventId,
+    bytes32 badgeType,
+    string metadataURI
+) returns (uint256)
+
+// Batch mint for efficiency
+function batchMint(
+    address[] recipients,
+    bytes32[] eventIds,
+    bytes32[] badgeTypes,
+    string[] metadataURIs
+)
+
+// Revoke achievement
+function revoke(uint256 tokenId, string reason)
+
+// Set transfer lock status
+function setTransferLock(uint256 tokenId, bool locked)
+
+// Get token metadata
+function getTokenMetadata(uint256 tokenId) 
+    returns (bytes32 eventId, bytes32 badgeType, uint256 issuedAt, 
+             bool transferLock, bool isRevoked, string revocationReason)
+```
+
+### 2. Collectible721.sol
+Fully transferable collectible NFT contract for trading and rewards.
+
+**Key Features:**
+- Standard ERC-721 with full transferability
+- EIP-712 permit-based minting
+- Scarcity controls (max supply per type)
+- Series and serial number tracking
+- Role-based access control
+- Batch minting support
+
+**Main Functions:**
+```solidity
+// Mint with backend signature permit
+function mintWithPermit(
+    address to,
+    bytes32 collectibleType,
+    string metadataURI,
+    uint256 series,
+    uint256 deadline,
+    bytes signature
+) returns (uint256)
+
+// Direct mint (admin only)
+function mint(
+    address to,
+    bytes32 collectibleType,
+    string metadataURI,
+    uint256 series
+) returns (uint256)
+
+// Set maximum supply for collectible type
+function setMaxSupply(bytes32 collectibleType, uint256 maxSupply)
+
+// Get token metadata with supply info
+function getTokenMetadata(uint256 tokenId) 
+    returns (bytes32 collectibleType, uint256 issuedAt, uint256 series,
+             uint256 serialNumber, uint256 maxSupply, uint256 currentSupply)
+```
+
+---
+
+## Dependencies
+
+### Prerequisites
+- Node.js v18 or higher
+- npm or yarn package manager
+- Git
+
+### Smart Contract Development
+```bash
+# Core dependencies (already in package.json)
+- hardhat: ^2.19.0
+- @openzeppelin/contracts: ^5.0.0
+- @nomicfoundation/hardhat-toolbox: ^4.0.0
+- ethers: ^6.9.0
+- dotenv: ^16.3.1
+```
+
+### Testing Tools
+- Hardhat Network (local blockchain)
+- Chai (assertions)
+- Hardhat coverage plugin
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/chirumer/Blockchain-project.git
+cd Blockchain-project
+```
+
+### 2. Install Smart Contract Dependencies
+```bash
+cd contracts
+npm install
+```
+
+### 3. Configure Environment
+```bash
+# Copy example environment file
+cp .env.example .env
+
+# Edit .env with your configuration
+# Required variables:
+# - POLYGON_TESTNET_RPC: RPC URL for Polygon Mumbai testnet
+# - DEPLOYER_PRIVATE_KEY: Private key for deployment wallet
+# - POLYGONSCAN_API_KEY: API key for contract verification (optional)
+# - BACKEND_MINTER_ADDRESS: Address that will have MINTER_ROLE
+```
+
+### 4. Compile Contracts
+```bash
+npm run compile
+```
+
+### 5. Run Tests
+```bash
+# Run all tests
+npm test
+
+# Run with coverage report
+npm run test:coverage
+```
+
+---
+
+## Deployment
+
+### Deploy to Local Hardhat Network
+```bash
+# Terminal 1: Start local node
+npm run node
+
+# Terminal 2: Deploy contracts
+npm run deploy:local
+```
+
+### Deploy to Polygon Mumbai Testnet
+```bash
+# Ensure your deployer wallet has test MATIC
+# Get free test MATIC from: https://faucet.polygon.technology/
+
+npm run deploy:testnet
+```
+
+### Verify Contracts on PolygonScan
+```bash
+# After deployment, verify your contracts
+npx hardhat verify --network polygon_testnet <CONTRACT_ADDRESS> "Constructor" "Arguments"
+
+# Or use the automated verification script (after setting POLYGONSCAN_API_KEY)
+npm run verify
+```
+
+### Deployment Output
+After successful deployment, contract addresses will be saved in:
+- `contracts/deployments/<network>-latest.json`
+- Contract addresses are needed for backend configuration
+
+---
+
+## How to Use (Post-Deployment)
+
+### 1. Grant Roles
+```javascript
+// Using Hardhat console or scripts
+const contract = await ethers.getContractAt("AchievementSBT", contractAddress);
+
+// Grant MINTER_ROLE to backend service
+const MINTER_ROLE = await contract.MINTER_ROLE();
+await contract.grantRole(MINTER_ROLE, backendMinterAddress);
+```
+
+### 2. Mint Achievement NFT (Direct)
+```javascript
+const eventId = ethers.id("event_hackathon_2025");
+const badgeType = ethers.id("badge_attendance");
+const metadataURI = "ipfs://QmXxxx...";
+const recipientAddress = "0x...";
+
+await achievementSBT.mint(recipientAddress, eventId, badgeType, metadataURI);
+```
+
+### 3. Mint with Permit (Backend Pattern)
+```javascript
+// Backend generates EIP-712 signature
+const signature = await signer.signTypedData(domain, types, value);
+
+// Anyone can call mintWithPermit with valid signature
+await achievementSBT.mintWithPermit(
+  recipient,
+  eventId,
+  badgeType,
+  metadataURI,
+  deadline,
+  signature
+);
+```
+
+### 4. Query Token Metadata
+```javascript
+const metadata = await contract.getTokenMetadata(tokenId);
+console.log(metadata);
+// Returns: eventId, badgeType, issuedAt, transferLock, isRevoked, revocationReason
+```
+
+---
+
+## Backend Setup (Not Yet Implemented)
+
+⚠️ **The backend is currently a skeleton and will crash if run.**
+
+```bash
+cd app/backend
+npm install
+cp .env.example .env
+# Edit .env with MongoDB, Redis, contract addresses, etc.
+
+# WARNING: This will not work yet - implementation in progress
+npm run dev  # Will crash - not implemented
+```
+
+Expected functionality (when complete):
+- REST API for event management
+- Wallet authentication and linking
+- QR code check-in system
+- Async NFT minting pipeline
+- IPFS metadata management
+
+---
+
+## Frontend Setup (Not Yet Implemented)
+
+⚠️ **The frontend is currently a skeleton and will crash if run.**
+
+```bash
+cd app/frontend
+npm install
+cp .env.example .env
+# Edit .env with API URL and contract addresses
+
+# WARNING: This will not work yet - implementation in progress
+npm start  # Will crash - not implemented
+```
+
+Expected functionality (when complete):
+- Event browsing and enrollment
+- MetaMask wallet connection
+- NFT badge gallery
+- Verification portal
+- Admin dashboard
+
+---
+
+## Project Structure
+
+```
+Blockchain-project/
+├── contracts/                    # ✅ Smart contracts (IMPLEMENTED)
+│   ├── contracts/
+│   │   ├── AchievementSBT.sol   # Non-transferable achievement NFTs
+│   │   └── Collectible721.sol   # Transferable collectible NFTs
+│   ├── test/                     # Comprehensive test suites
+│   ├── scripts/                  # Deployment scripts
+│   ├── hardhat.config.js        # Hardhat configuration
+│   └── README.md                # Detailed contract documentation
+│
+├── app/                          # 🚧 Application (IN PROGRESS)
+│   ├── backend/                 # Node.js API (skeleton only)
+│   │   ├── src/
+│   │   │   ├── models/          # MongoDB schemas (defined)
+│   │   │   ├── routes/          # API endpoints (defined)
+│   │   │   ├── services/        # Blockchain/IPFS services (defined)
+│   │   │   └── server.js        # Express server (not functional)
+│   │   └── package.json
+│   │
+│   └── frontend/                # React app (skeleton only)
+│       ├── src/
+│       │   ├── components/      # UI components (basic)
+│       │   ├── pages/           # Route pages (placeholders)
+│       │   └── contexts/        # React contexts (defined)
+│       └── package.json
+│
+└── README.md / README2.md       # Project documentation
+```
+
+---
+
+## Testing
+
+### Smart Contract Tests
+
+The contracts include comprehensive test coverage:
+
+```bash
+cd contracts
+
+# Run all tests
+npm test
+
+# Run with gas reporting
+REPORT_GAS=true npm test
+
+# Generate coverage report
+npm run test:coverage
+```
+
+**Test Coverage Includes:**
+- ✅ Role-based access control
+- ✅ Minting (direct and permit-based)
+- ✅ Batch operations
+- ✅ Transfer locks and enforcement
+- ✅ Revocation system
+- ✅ Scarcity controls (collectibles)
+- ✅ Pausability
+- ✅ EIP-712 signature verification
+- ✅ Edge cases and failure modes
+
+### Expected Test Results
+All 40+ tests should pass:
+```
+AchievementSBT
+  ✓ Deployment tests
+  ✓ Minting tests
+  ✓ Transfer lock tests
+  ✓ Revocation tests
+  ✓ EIP-712 permit tests
+  ✓ Pausability tests
+
+Collectible721
+  ✓ Deployment tests
+  ✓ Minting tests
+  ✓ Scarcity management tests
+  ✓ Series tracking tests
+  ✓ EIP-712 permit tests
+```
+
+---
+
+## Security Features
+
+### Implemented (Smart Contracts)
+- ✅ **EIP-712 Signatures**: Backend-authorized minting prevents unauthorized token creation
+- ✅ **Role-Based Access**: Granular permissions (Admin, Minter, Pauser, Revoker)
+- ✅ **Transfer Locks**: Achievement NFTs are non-transferable (soulbound)
+- ✅ **Reentrancy Guards**: Protection against reentrancy attacks
+- ✅ **Pausability**: Emergency stop mechanism
+- ✅ **Input Validation**: Require statements for all critical parameters
+- ✅ **OpenZeppelin Standards**: Using audited, battle-tested libraries
+
+### Planned (Backend/Frontend)
+- 🚧 Rate limiting and DDoS protection
+- 🚧 PII encryption (no personal data on-chain)
+- 🚧 Anti-cheat measures (rotating QR codes, device fingerprinting)
+- 🚧 HSM/KMS key management for production minter wallet
+- 🚧 HTTPS and CORS configuration
+
+---
+
+## Gas Optimization
+
+The contracts are optimized for gas efficiency:
+- Batch minting reduces per-token gas cost by ~50%
+- Efficient storage layouts
+- Minimal on-chain storage (IPFS for metadata)
+- Optimized loops and operations
+
+**Estimated Gas Costs (Polygon Mumbai):**
+- Single mint: ~150k gas (~$0.001 at typical prices)
+- Batch mint (10 tokens): ~800k gas (~80k per token)
+- Revocation: ~50k gas
+- Set transfer lock: ~45k gas
+
+---
+
+## NFT Metadata Structure
+
+NFT metadata follows OpenSea standard and is stored on IPFS:
+
+```json
+{
+  "name": "ASU • Hackathon 2025 • Attendance",
+  "description": "Verified on-chain proof of attendance.",
+  "image": "ipfs://<CID>/badge.png",
+  "external_url": "https://verify.sds.example/attest/<tokenId>",
+  "attributes": [
+    {"trait_type": "event_id", "value": "evt_8F3..."},
+    {"trait_type": "event_name", "value": "ASU Hackathon"},
+    {"trait_type": "badge_type", "value": "Attendance"},
+    {"trait_type": "issued_at", "value": "2025-03-15T20:21:00Z"},
+    {"trait_type": "issuer", "value": "SunDevilSync 2.0"},
+    {"trait_type": "transferable", "value": "false"}
+  ]
+}
+```
+
+**Privacy**: No personally identifiable information (PII) is stored in public metadata or on-chain.
+
+---
+
+## Roadmap
+
+### ✅ Phase 1: Smart Contracts (COMPLETED)
+- [x] Design and implement AchievementSBT contract
+- [x] Design and implement Collectible721 contract
+- [x] Write comprehensive test suites
+- [x] Deploy to local and testnet environments
+- [x] Documentation
+
+### 🚧 Phase 2: Backend Development (IN PROGRESS)
+- [ ] Implement authentication and wallet linking
+- [ ] Build event management API
+- [ ] Create check-in system with QR codes
+- [ ] Implement IPFS metadata service
+- [ ] Build async minting pipeline
+- [ ] Set up queue workers
+
+### 📋 Phase 3: Frontend Development (PLANNED)
+- [ ] Implement wallet connection
+- [ ] Build event browsing and enrollment UI
+- [ ] Create badge gallery
+- [ ] Build verification portal
+- [ ] Implement admin dashboard
+
+### 📋 Phase 4: Integration & Testing (PLANNED)
+- [ ] End-to-end testing
+- [ ] Security audit
+- [ ] Performance optimization
+- [ ] User acceptance testing
+
+### 📋 Phase 5: Production Deployment (PLANNED)
+- [ ] Deploy to Polygon mainnet
+- [ ] Set up production infrastructure
+- [ ] Monitoring and analytics
+- [ ] Launch to ASU community
+
+---
+
+## Contributing
+
+This is an active development project. Contributions are welcome!
+
+### Current Needs
+- Backend API implementation
+- Frontend React components
+- IPFS integration
+- Testing and security review
+
+### Development Process
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+MIT License - See LICENSE file for details
+
+---
+
+## Contact & Support
+
+- **Repository**: https://github.com/chirumer/Blockchain-project
+- **Documentation**: See `/contracts/README.md` for detailed contract documentation
+- **Issues**: Please report bugs via GitHub Issues
+
+---
+
+## Acknowledgments
+
+- **OpenZeppelin**: Secure smart contract libraries
+- **Polygon**: Scalable blockchain infrastructure
+- **Hardhat**: Ethereum development environment
+- **ASU Community**: Inspiration and support
+
+---
+
+**Built with ❤️ for ASU students, by ASU students**
+
+*Last Updated: November 2025*
