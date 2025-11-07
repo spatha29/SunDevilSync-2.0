@@ -26,24 +26,6 @@ SunDevilSync 2.0 is a blockchain-based event management platform that rewards st
 
 ---
 
-## Current Implementation Status
-
-⚠️ **Note**: Currently, **only the smart contracts have been fully developed and tested**. The backend and frontend implementations are still in progress and will not function if run at this stage.
-
-### ✅ Completed
-- Smart contract development (AchievementSBT.sol, Collectible721.sol)
-- Comprehensive test suites for both contracts
-- Deployment scripts for local and testnet deployment
-- Contract documentation
-
-### 🚧 In Progress
-- Backend API implementation
-- Frontend React application
-- IPFS integration
-- Database models and services
-
----
-
 ## Smart Contracts
 
 ### 1. AchievementSBT.sol
@@ -286,53 +268,6 @@ const metadata = await contract.getTokenMetadata(tokenId);
 console.log(metadata);
 // Returns: eventId, badgeType, issuedAt, transferLock, isRevoked, revocationReason
 ```
-
----
-
-## Backend Setup (Not Yet Implemented)
-
-⚠️ **The backend is currently a skeleton and will crash if run.**
-
-```bash
-cd app/backend
-npm install
-cp .env.example .env
-# Edit .env with MongoDB, Redis, contract addresses, etc.
-
-# WARNING: This will not work yet - implementation in progress
-npm run dev  # Will crash - not implemented
-```
-
-Expected functionality (when complete):
-- REST API for event management
-- Wallet authentication and linking
-- QR code check-in system
-- Async NFT minting pipeline
-- IPFS metadata management
-
----
-
-## Frontend Setup (Not Yet Implemented)
-
-⚠️ **The frontend is currently a skeleton and will crash if run.**
-
-```bash
-cd app/frontend
-npm install
-cp .env.example .env
-# Edit .env with API URL and contract addresses
-
-# WARNING: This will not work yet - implementation in progress
-npm start  # Will crash - not implemented
-```
-
-Expected functionality (when complete):
-- Event browsing and enrollment
-- MetaMask wallet connection
-- NFT badge gallery
-- Verification portal
-- Admin dashboard
-
 ---
 
 ## Project Structure
@@ -431,29 +366,6 @@ Collectible721
 - ✅ **Input Validation**: Require statements for all critical parameters
 - ✅ **OpenZeppelin Standards**: Using audited, battle-tested libraries
 
-### Planned (Backend/Frontend)
-- 🚧 Rate limiting and DDoS protection
-- 🚧 PII encryption (no personal data on-chain)
-- 🚧 Anti-cheat measures (rotating QR codes, device fingerprinting)
-- 🚧 HSM/KMS key management for production minter wallet
-- 🚧 HTTPS and CORS configuration
-
----
-
-## Gas Optimization
-
-The contracts are optimized for gas efficiency:
-- Batch minting reduces per-token gas cost by ~50%
-- Efficient storage layouts
-- Minimal on-chain storage (IPFS for metadata)
-- Optimized loops and operations
-
-**Estimated Gas Costs (Polygon Mumbai):**
-- Single mint: ~150k gas (~$0.001 at typical prices)
-- Batch mint (10 tokens): ~800k gas (~80k per token)
-- Revocation: ~50k gas
-- Set transfer lock: ~45k gas
-
 ---
 
 ## NFT Metadata Structure
@@ -516,48 +428,6 @@ NFT metadata follows OpenSea standard and is stored on IPFS:
 - [ ] Set up production infrastructure
 - [ ] Monitoring and analytics
 - [ ] Launch to ASU community
-
----
-
-## Contributing
-
-This is an active development project. Contributions are welcome!
-
-### Current Needs
-- Backend API implementation
-- Frontend React components
-- IPFS integration
-- Testing and security review
-
-### Development Process
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## License
-
-MIT License - See LICENSE file for details
-
----
-
-## Contact & Support
-
-- **Repository**: https://github.com/chirumer/Blockchain-project
-- **Documentation**: See `/contracts/README.md` for detailed contract documentation
-- **Issues**: Please report bugs via GitHub Issues
-
----
-
-## Acknowledgments
-
-- **OpenZeppelin**: Secure smart contract libraries
-- **Polygon**: Scalable blockchain infrastructure
-- **Hardhat**: Ethereum development environment
-- **ASU Community**: Inspiration and support
 
 ---
 
