@@ -1,64 +1,146 @@
-# SunDevilSync 2.0 - Smart Contracts
+# SunDevilSync 2.0 – Blockchain Event Management & Credential Platform
 
-Smart contracts for the NFT Gamified Event Portal on Polygon blockchain.
+Smart contracts powering **SunDevilSync 2.0**, a decentralized event management and credential verification platform built on the **Polygon blockchain**.
 
-## Overview
+The platform enables universities and organizations to issue **tamper-proof digital achievements and collectibles** using NFTs.
 
-This directory contains the Solidity smart contracts for SunDevilSync 2.0, implementing:
+---
 
-- **AchievementSBT**: Non-transferable achievement NFTs (ERC-721 with transfer locks)
-- **Collectible721**: Fully transferable collectible NFTs with scarcity controls
+# 🎥 Demo Video
 
-## Features
+Project demonstration of the **SunDevilSync 2.0 Gamified Event Portal**
 
-### AchievementSBT Contract
-- ✅ ERC-721 compliant with transfer restrictions
-- ✅ EIP-712 permit-based minting (backend authorization)
-- ✅ Role-based access control (Admin, Minter, Pauser, Revoker)
-- ✅ Token-level transfer locks
-- ✅ Achievement revocation system
-- ✅ Batch minting for gas efficiency
-- ✅ On-chain metadata (event ID, badge type, timestamp)
-- ✅ Pausable for emergency stops
+demo/SunDevilSync.mov
 
-### Collectible721 Contract
-- ✅ Fully transferable ERC-721 tokens
-- ✅ EIP-712 permit-based minting
-- ✅ Scarcity controls (max supply per type)
-- ✅ Series and serial number tracking
-- ✅ Batch minting support
-- ✅ Role-based access control
+---
 
-## Architecture
+# 🏗 System Architecture
+
+![SunDevilSync Architecture](demo/SunDevilSync%202.0%20Architecture.png)
+
+The architecture demonstrates the interaction between:
+
+- **Frontend Event Portal**
+- **Backend Event Service**
+- **Polygon Smart Contracts**
+- **Wallet Authentication (MetaMask)**
+- **IPFS Metadata Storage**
+- **Credential Verification Layer**
+
+This design ensures secure credential issuance and decentralized verification.
+
+---
+
+# 🚀 Project Overview
+
+SunDevilSync 2.0 is a **blockchain-based event management platform** designed for universities and organizations.
+
+It enables:
+
+- Secure **event participation tracking**
+- Issuing **NFT-based achievements**
+- **Soulbound-style credentials** that cannot be transferred
+- Collectible NFTs for gamified engagement
+- Transparent credential verification on-chain
+
+The system uses **ERC-721 NFTs with custom controls** to ensure authenticity and prevent fraud.
+
+---
+
+# ⚙️ Smart Contracts
+
+## AchievementSBT
+
+A **non-transferable NFT** representing event achievements.
+
+Features:
+
+- ERC-721 compliant with transfer restrictions
+- Soulbound-style tokens (non-transferable by default)
+- EIP-712 permit-based minting
+- Role-based access control
+- Token revocation support
+- Batch minting for events
+- Transfer lock enforcement
+- On-chain metadata
+- Emergency pause mechanism
+
+---
+
+## Collectible721
+
+A **transferable NFT** used for gamified rewards.
+
+Features:
+
+- Fully transferable ERC-721 tokens
+- Permit-based minting
+- Scarcity controls (max supply)
+- Series tracking
+- Serial number generation
+- Batch minting
+- Role-based permissions
+
+---
+
+# 🧰 Tech Stack
+
+- Solidity
+- Hardhat
+- OpenZeppelin Contracts
+- Polygon Blockchain
+- Ethers.js
+- Node.js
+- ERC-721 NFTs
+- EIP-712 Signatures
+
+---
+
+# 🏗 Project Structure
 
 ```
 contracts/
+│
 ├── contracts/
-│   ├── AchievementSBT.sol      # Non-transferable achievement NFTs
-│   └── Collectible721.sol      # Transferable collectible NFTs
+│   ├── AchievementSBT.sol
+│   └── Collectible721.sol
+│
 ├── scripts/
-│   └── deploy.js               # Deployment script
+│   └── deploy.js
+│
 ├── test/
-│   ├── AchievementSBT.test.js  # Comprehensive tests
-│   └── Collectible721.test.js  # Comprehensive tests
-├── hardhat.config.js           # Hardhat configuration
-└── package.json                # Dependencies
+│   ├── AchievementSBT.test.js
+│   └── Collectible721.test.js
+│
+├── hardhat.config.js
+└── package.json
+
+demo/
+├── SunDevilSync.mov
+└── SunDevilSync 2.0 Architecture.png
 ```
 
-## Setup
+---
 
-### Prerequisites
-- Node.js v18+
+# 🛠 Setup
+
+## Prerequisites
+
+- Node.js **v18+**
 - npm or yarn
 
-### Installation
+---
+
+## Install Dependencies
 
 ```bash
 cd contracts
 npm install
 ```
 
-### Environment Configuration
+---
+
+## Environment Configuration
 
 Create a `.env` file:
 
@@ -66,143 +148,111 @@ Create a `.env` file:
 cp .env.example .env
 ```
 
-Edit `.env` with your configuration:
+Example configuration:
 
-```env
-# Network RPC URLs
+```
 POLYGON_TESTNET_RPC=https://rpc-mumbai.maticvigil.com
 POLYGON_MAINNET_RPC=https://polygon-rpc.com
 
-# Deployment
 DEPLOYER_PRIVATE_KEY=your_private_key_here
 
-# Verification
 POLYGONSCAN_API_KEY=your_polygonscan_api_key
 
-# Backend minter address (will be granted MINTER_ROLE)
 BACKEND_MINTER_ADDRESS=0x0000000000000000000000000000000000000000
 ```
 
-## Development
+---
 
-### Compile Contracts
+# 🧪 Development
 
-```bash
+## Compile Contracts
+
+```
 npm run compile
 ```
 
-### Run Tests
+## Run Tests
 
-```bash
+```
 npm test
 ```
 
-### Test Coverage
+## Test Coverage
 
-```bash
+```
 npm run test:coverage
 ```
 
-### Lint Contracts
+---
 
-```bash
-npm run lint
-npm run lint:fix  # Auto-fix issues
+# 🔗 Local Development
+
+Start a local blockchain:
+
 ```
-
-### Local Development
-
-Start a local Hardhat node:
-
-```bash
 npm run node
 ```
 
-Deploy to local network (in another terminal):
+Deploy contracts locally:
 
-```bash
+```
 npm run deploy:local
 ```
 
-## Deployment
+---
 
-### Deploy to Polygon Testnet (Mumbai)
+# 🚀 Deployment
 
-```bash
+Deploy to Polygon testnet:
+
+```
 npm run deploy:testnet
 ```
 
-### Verify Contracts
+Verify contracts:
 
-After deployment, verify on PolygonScan:
-
-```bash
+```
 npm run verify
 ```
 
-Or manually:
+Manual verification:
 
-```bash
-npx hardhat verify --network polygon_testnet <CONTRACT_ADDRESS> "Constructor" "Args"
+```
+npx hardhat verify --network polygon_testnet CONTRACT_ADDRESS
 ```
 
-## Contract Interaction
+---
 
-### Grant Roles
+# 🧾 Contract Interaction Examples
+
+### Grant Minter Role
 
 ```javascript
-// Grant MINTER_ROLE to backend service
 const MINTER_ROLE = await contract.MINTER_ROLE();
 await contract.grantRole(MINTER_ROLE, backendAddress);
 ```
 
-### Mint Achievement (Direct)
+---
+
+### Mint Achievement
 
 ```javascript
 const eventId = ethers.id("event_hackathon_2025");
 const badgeType = ethers.id("badge_attendance");
-const metadataURI = "ipfs://QmXxxx...";
 
 await achievementSBT.mint(
   recipientAddress,
   eventId,
   badgeType,
-  metadataURI
+  "ipfs://metadata"
 );
 ```
 
-### Mint with Permit (Backend)
+---
+
+### Mint Using Permit
 
 ```javascript
-const domain = {
-  name: "SunDevilSync Achievement",
-  version: "1",
-  chainId: chainId,
-  verifyingContract: contractAddress
-};
-
-const types = {
-  MintPermit: [
-    { name: "to", type: "address" },
-    { name: "eventId", type: "bytes32" },
-    { name: "badgeType", type: "bytes32" },
-    { name: "metadataURI", type: "string" },
-    { name: "nonce", type: "uint256" },
-    { name: "deadline", type: "uint256" }
-  ]
-};
-
-const value = {
-  to: recipientAddress,
-  eventId: eventId,
-  badgeType: badgeType,
-  metadataURI: metadataURI,
-  nonce: await contract.nonces(recipientAddress),
-  deadline: deadline
-};
-
-const signature = await minterSigner.signTypedData(domain, types, value);
-
 await contract.mintWithPermit(
   recipientAddress,
   eventId,
@@ -213,117 +263,97 @@ await contract.mintWithPermit(
 );
 ```
 
-### Set Max Supply (Collectibles)
+---
+
+### Set Max Supply
 
 ```javascript
-const collectibleType = ethers.id("collectible_limited_edition");
-const maxSupply = 100;
-
 await collectible721.setMaxSupply(collectibleType, maxSupply);
 ```
+
+---
 
 ### Revoke Achievement
 
 ```javascript
-const tokenId = 0;
-const reason = "Fraudulent attendance";
-
-await achievementSBT.revoke(tokenId, reason);
+await achievementSBT.revoke(tokenId, "Fraudulent attendance");
 ```
 
-## Security Considerations
+---
 
-### Role Separation
-- **DEFAULT_ADMIN_ROLE**: Deploy admin (multisig recommended)
-- **MINTER_ROLE**: Backend service only (HSM/KMS protected)
-- **PAUSER_ROLE**: Emergency responders
-- **REVOKER_ROLE**: Compliance officers
+# 🔐 Security Considerations
 
-### Best Practices
-1. **Never share private keys** - Use hardware wallets or HSM for production
-2. **Multisig admin** - Use Gnosis Safe for admin operations
-3. **Test extensively** - Run full test suite before deployment
-4. **Audit contracts** - Get professional audit before mainnet
-5. **Monitor events** - Set up alerts for abnormal activity
-6. **Gas optimization** - Use batch operations for large mints
+## Role Structure
 
-### Transfer Lock Mechanism
-- Achievement NFTs are **non-transferable by default**
-- Admin can unlock specific tokens if needed
-- Prevents credential fraud and maintains integrity
+| Role | Responsibility |
+|-----|-----|
+| DEFAULT_ADMIN_ROLE | Contract administration |
+| MINTER_ROLE | Backend minting service |
+| PAUSER_ROLE | Emergency pause |
+| REVOKER_ROLE | Credential revocation |
 
-### EIP-712 Signatures
-- Backend must sign all permit-based mints
-- Prevents unauthorized minting
-- Includes nonce to prevent replay attacks
-- Has deadline for time-bound validity
+---
 
-## Gas Optimization
+## Best Practices
 
-### Batch Operations
-Use batch minting for events with many attendees:
+- Use **multisig wallets** for admin roles
+- Protect backend keys using **HSM / KMS**
+- Run full test suite before deployment
+- Monitor contract events
+- Audit contracts before mainnet deployment
+
+---
+
+# ⛽ Gas Optimization
+
+Batch minting reduces costs during large events.
+
+Example:
 
 ```javascript
 await achievementSBT.batchMint(
-  [addr1, addr2, addr3],
-  [eventId, eventId, eventId],
-  [badgeType, badgeType, badgeType],
-  [uri1, uri2, uri3]
+  [addr1, addr2],
+  [eventId, eventId],
+  [badgeType, badgeType],
+  [uri1, uri2]
 );
 ```
 
-### Expected Gas Costs (Polygon)
-- Single mint: ~150k gas
-- Batch mint (10 tokens): ~800k gas (~80k per token)
-- Revocation: ~50k gas
-- Set transfer lock: ~45k gas
+Estimated Polygon Gas Usage:
 
-## Troubleshooting
+| Operation | Gas |
+|------|------|
+| Single Mint | ~150k |
+| Batch Mint (10) | ~800k |
+| Revocation | ~50k |
 
-### Common Issues
+---
 
-**"AccessControl: account is missing role"**
-- Ensure the signer has the required role
-- Check role assignments with `hasRole()`
-
-**"Token is non-transferable"**
-- Achievement NFTs are locked by default
-- Use `setTransferLock()` to unlock if needed
-
-**"Max supply reached"**
-- Increase max supply or use different collectible type
-- Check current supply with `currentSupply()`
-
-**"Permit expired"**
-- Ensure deadline is in the future
-- Regenerate signature with new deadline
-
-## Testing
+# 🧪 Testing
 
 Test coverage includes:
-- ✅ Role-based access control
-- ✅ Minting (direct and permit-based)
-- ✅ Batch operations
-- ✅ Transfer locks and enforcement
-- ✅ Revocation system
-- ✅ Scarcity controls
-- ✅ Pausability
-- ✅ EIP-712 signature verification
-- ✅ Edge cases and failure modes
+
+- Access control
+- Minting logic
+- Batch operations
+- Transfer restrictions
+- Revocation system
+- Scarcity controls
+- Permit signature verification
+- Pausability
 
 Run tests:
-```bash
+
+```
 npm test
 ```
 
-## License
+---
 
-MIT
+# 👩‍💻 Author
 
-## Support
+**Shristi**  
+MS Computer Science  
+Arizona State University
 
-For issues or questions:
-1. Check existing GitHub issues
-2. Review test files for usage examples
-3. Consult Hardhat documentation
-4. Contact the development team
+Project developed for **SunDevilSync 2.0 – a blockchain-based event management and credential verification platform for higher education**.

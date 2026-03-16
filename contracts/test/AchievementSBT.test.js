@@ -43,7 +43,7 @@ describe("AchievementSBT", function () {
   describe("Minting", function () {
     it("Should mint a new achievement NFT", async function () {
       const metadataURI = "ipfs://QmTest123";
-      
+
       const tx = await achievementSBT.connect(minter).mint(
         user1.address,
         eventId,
@@ -117,9 +117,9 @@ describe("AchievementSBT", function () {
 
     it("Should allow admin to unlock token", async function () {
       await achievementSBT.connect(owner).setTransferLock(0, false);
-      
+
       expect(await achievementSBT.transferLock(0)).to.be.false;
-      
+
       await achievementSBT.connect(user1).transferFrom(user1.address, user2.address, 0);
       expect(await achievementSBT.ownerOf(0)).to.equal(user2.address);
     });
@@ -143,10 +143,27 @@ describe("AchievementSBT", function () {
 
     it("Should allow admin to revoke token", async function () {
       const reason = "Fraudulent attendance";
-      
-      await expect(achievementSBT.connect(owner).revoke(0, reason))
-        .to.emit(achievementSBT, "AchievementRevoked")
-        .withArgs(0, reason, owner.address, await time.latest());
+
+      const tx = await achievementSBT.connect(owner).revoke(0, reason);
+      const receipt = await tx.wait();
+
+      const event = receipt.logs
+        .map((log) => {
+          try {
+            return achievementSBT.interface.parseLog(log);
+          } catch {
+            return null;
+          }
+        })
+        .find((parsedLog) => parsedLog && parsedLog.name === "AchievementRevoked");
+
+      expect(event).to.not.be.undefined;
+      expect(event.args[0]).to.equal(0n);
+      expect(event.args[1]).to.equal(reason);
+      expect(event.args[2]).to.equal(owner.address);
+
+      const block = await ethers.provider.getBlock(receipt.blockNumber);
+      expect(event.args[3]).to.be.closeTo(BigInt(block.timestamp), 2n);
 
       expect(await achievementSBT.isRevoked(0)).to.be.true;
       expect(await achievementSBT.revocationReason(0)).to.equal(reason);
@@ -154,7 +171,7 @@ describe("AchievementSBT", function () {
 
     it("Should prevent double revocation", async function () {
       await achievementSBT.connect(owner).revoke(0, "Reason 1");
-      
+
       await expect(
         achievementSBT.connect(owner).revoke(0, "Reason 2")
       ).to.be.revertedWith("Already revoked");
@@ -179,7 +196,7 @@ describe("AchievementSBT", function () {
 
     it("Should return complete token metadata", async function () {
       const metadata = await achievementSBT.getTokenMetadata(0);
-      
+
       expect(metadata._eventId).to.equal(eventId);
       expect(metadata._badgeType).to.equal(badgeType);
       expect(metadata._transferLock).to.be.true;
@@ -190,7 +207,7 @@ describe("AchievementSBT", function () {
   describe("Pausability", function () {
     it("Should pause and unpause", async function () {
       await achievementSBT.connect(owner).pause();
-      
+
       await expect(
         achievementSBT.connect(minter).mint(
           user1.address,
@@ -201,14 +218,14 @@ describe("AchievementSBT", function () {
       ).to.be.revertedWithCustomError(achievementSBT, "EnforcedPause");
 
       await achievementSBT.connect(owner).unpause();
-      
+
       await achievementSBT.connect(minter).mint(
         user1.address,
         eventId,
         badgeType,
         "ipfs://QmTest"
       );
-      
+
       expect(await achievementSBT.ownerOf(0)).to.equal(user1.address);
     });
   });
@@ -219,12 +236,11 @@ describe("AchievementSBT", function () {
       const metadataURI = "ipfs://QmTest";
       const nonce = await achievementSBT.nonces(user1.address);
 
-      // Get domain separator
       const domain = {
         name: "SunDevilSync Achievement",
         version: "1",
         chainId: (await ethers.provider.getNetwork()).chainId,
-        verifyingContract: await achievementSBT.getAddress()
+        verifyingContract: await achievementSBT.getAddress(),
       };
 
       const types = {
@@ -234,8 +250,8 @@ describe("AchievementSBT", function () {
           { name: "badgeType", type: "bytes32" },
           { name: "metadataURI", type: "string" },
           { name: "nonce", type: "uint256" },
-          { name: "deadline", type: "uint256" }
-        ]
+          { name: "deadline", type: "uint256" },
+        ],
       };
 
       const value = {
@@ -244,7 +260,7 @@ describe("AchievementSBT", function () {
         badgeType: badgeType,
         metadataURI: metadataURI,
         nonce: nonce,
-        deadline: deadline
+        deadline: deadline,
       };
 
       const signature = await minter.signTypedData(domain, types, value);
@@ -262,8 +278,8 @@ describe("AchievementSBT", function () {
     });
 
     it("Should reject expired permit", async function () {
-      const deadline = (await time.latest()) - 1; // Past deadline
-      const signature = "0x" + "00".repeat(65); // Dummy signature
+      const deadline = (await time.latest()) - 1;
+      const signature = "0x" + "00".repeat(65);
 
       await expect(
         achievementSBT.mintWithPermit(
