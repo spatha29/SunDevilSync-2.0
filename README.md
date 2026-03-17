@@ -374,45 +374,6 @@ NFT metadata follows OpenSea standard and is stored on IPFS:
 ```
 
 **Privacy**: No personally identifiable information (PII) is stored in public metadata or on-chain.
-
----
-
-## Roadmap
-
-### ✅ Phase 1: Smart Contracts (COMPLETED)
-- [x] Design and implement AchievementSBT contract
-- [x] Design and implement Collectible721 contract
-- [x] Write comprehensive test suites
-- [x] Deploy to local and testnet environments
-- [x] Documentation
-
-### 🚧 Phase 2: Backend Development (IN PROGRESS)
-- [ ] Implement authentication and wallet linking
-- [ ] Build event management API
-- [ ] Create check-in system with QR codes
-- [ ] Implement IPFS metadata service
-- [ ] Build async minting pipeline
-- [ ] Set up queue workers
-
-### 📋 Phase 3: Frontend Development (PLANNED)
-- [ ] Implement wallet connection
-- [ ] Build event browsing and enrollment UI
-- [ ] Create badge gallery
-- [ ] Build verification portal
-- [ ] Implement admin dashboard
-
-### 📋 Phase 4: Integration & Testing (PLANNED)
-- [ ] End-to-end testing
-- [ ] Security audit
-- [ ] Performance optimization
-- [ ] User acceptance testing
-
-### 📋 Phase 5: Production Deployment (PLANNED)
-- [ ] Deploy to Polygon mainnet
-- [ ] Set up production infrastructure
-- [ ] Monitoring and analytics
-- [ ] Launch to ASU community
-
 ---
 
 **Built with ❤️ for ASU students, by ASU students**
