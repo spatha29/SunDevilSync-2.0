@@ -1,137 +1,144 @@
-# SunDevilSync 2.0 – Blockchain Event Management & Credential Platform
+# SunDevilSync 2.0 – NFT Gamified Event Portal
 
-Smart contracts powering **SunDevilSync 2.0**, a decentralized event management and credential verification platform built on the **Polygon blockchain**.
-
-The platform enables universities and organizations to issue **tamper-proof digital achievements and collectibles** using NFTs.
-
----
-
-# 🎥 Demo Video
-
-Project demonstration of the **SunDevilSync 2.0 Gamified Event Portal**
-
-demo/SunDevilSync.mp4
+**Author:** Shristi
+**Program:** MS Computer Science – Arizona State University
 
 ---
 
-# 🏗 System Architecture
+## 🎥 Demo Video
 
-![SunDevilSync Architecture](demo/SunDevilSync%202.0%20Architecture.png)
+<video src="demo/SunDevilSync.mp4" controls width="700"></video>
 
-The architecture demonstrates the interaction between:
-
-- **Frontend Event Portal**
-- **Backend Event Service**
-- **Polygon Smart Contracts**
-- **Wallet Authentication (MetaMask)**
-- **IPFS Metadata Storage**
-- **Credential Verification Layer**
-
-This design ensures secure credential issuance and decentralized verification.
+If the video does not load, open it directly:
+👉 [Watch Demo](demo/SunDevilSync.mp4)
 
 ---
 
-# 🚀 Project Overview
+## 🏗 Architecture Diagram
 
-SunDevilSync 2.0 is a **blockchain-based event management platform** designed for universities and organizations.
-
-It enables:
-
-- Secure **event participation tracking**
-- Issuing **NFT-based achievements**
-- **Soulbound-style credentials** that cannot be transferred
-- Collectible NFTs for gamified engagement
-- Transparent credential verification on-chain
-
-The system uses **ERC-721 NFTs with custom controls** to ensure authenticity and prevent fraud.
+![Architecture Diagram](demo/SunDevilSync%202.0%20Architecture.png)
 
 ---
 
-# ⚙️ Smart Contracts
+## Project Description
 
-## AchievementSBT
+SunDevilSync 2.0 is a blockchain-based event management platform that rewards students with verifiable NFT badges for participation in campus events. The system issues non-transferable achievement NFTs for attendance and credentials, while also enabling tradable collectible NFTs for referrals and special events.
 
-A **non-transferable NFT** representing event achievements.
+### Key Features
 
-Features:
+* **Event Management**: Browse, enroll, and check-in to campus events
+* **NFT Achievement Badges**: Blockchain-verified credentials on Polygon
+* **Dual NFT System**
 
-- ERC-721 compliant with transfer restrictions
-- Soulbound-style tokens (non-transferable by default)
-- EIP-712 permit-based minting
-- Role-based access control
-- Token revocation support
-- Batch minting for events
-- Transfer lock enforcement
-- On-chain metadata
-- Emergency pause mechanism
+  * **AchievementSBT**: Non-transferable achievement NFTs (attendance, winner, volunteer badges)
+  * **Collectible721**: Transferable collectible NFTs (referrals, limited editions)
+* **Verification Portal**: Public verification for employers and faculty
+* **Wallet Integration**: MetaMask and WalletConnect support
+* **IPFS Metadata**: Decentralized metadata storage with privacy protection
 
 ---
 
-## Collectible721
+## Technology Stack
 
-A **transferable NFT** used for gamified rewards.
-
-Features:
-
-- Fully transferable ERC-721 tokens
-- Permit-based minting
-- Scarcity controls (max supply)
-- Series tracking
-- Serial number generation
-- Batch minting
-- Role-based permissions
+* **Blockchain:** Polygon (Mumbai Testnet)
+* **Smart Contracts:** Solidity 0.8.x, OpenZeppelin ERC-721
+* **Development:** Hardhat
+* **Backend:** Node.js, Express, MongoDB, Redis *(planned)*
+* **Frontend:** React, TailwindCSS *(planned)*
+* **IPFS:** Pinata *(planned)*
 
 ---
 
-# 🧰 Tech Stack
+# Smart Contracts
 
-- Solidity
-- Hardhat
-- OpenZeppelin Contracts
-- Polygon Blockchain
-- Ethers.js
-- Node.js
-- ERC-721 NFTs
-- EIP-712 Signatures
+## 1️⃣ AchievementSBT.sol
 
----
+Non-transferable achievement NFT contract for credentials and participation badges.
 
-# 🏗 Project Structure
+### Key Features
 
+* ERC-721 compliant with transfer restrictions
+* EIP-712 permit-based minting
+* Role-based access control
+* Token-level transfer locks (soulbound functionality)
+* On-chain revocation system
+* Batch minting for gas efficiency
+* Pausable for emergency stops
+
+### Main Functions
+
+```solidity
+function mintWithPermit(
+    address to,
+    bytes32 eventId,
+    bytes32 badgeType,
+    string metadataURI,
+    uint256 deadline,
+    bytes signature
+) returns (uint256)
 ```
-contracts/
-│
-├── contracts/
-│   ├── AchievementSBT.sol
-│   └── Collectible721.sol
-│
-├── scripts/
-│   └── deploy.js
-│
-├── test/
-│   ├── AchievementSBT.test.js
-│   └── Collectible721.test.js
-│
-├── hardhat.config.js
-└── package.json
 
-demo/
-├── SunDevilSync.mov
-└── SunDevilSync 2.0 Architecture.png
+```solidity
+function mint(
+    address to,
+    bytes32 eventId,
+    bytes32 badgeType,
+    string metadataURI
+) returns (uint256)
+```
+
+```solidity
+function batchMint(
+    address[] recipients,
+    bytes32[] eventIds,
+    bytes32[] badgeTypes,
+    string[] metadataURIs
+)
+```
+
+```solidity
+function revoke(uint256 tokenId, string reason)
 ```
 
 ---
 
-# 🛠 Setup
+## 2️⃣ Collectible721.sol
+
+Transferable collectible NFT contract for rewards and trading.
+
+### Key Features
+
+* Standard ERC-721 with full transferability
+* Permit-based minting
+* Scarcity controls (max supply per type)
+* Series tracking
+* Role-based access control
+* Batch minting support
+
+---
+
+# Dependencies
 
 ## Prerequisites
 
-- Node.js **v18+**
-- npm or yarn
+* Node.js v18+
+* npm or yarn
+* Git
 
 ---
 
-## Install Dependencies
+# Setup Instructions
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/spatha29/SunDevilSync-2.0.git
+cd SunDevilSync-2.0
+```
+
+---
+
+## 2️⃣ Install Dependencies
 
 ```bash
 cd contracts
@@ -140,220 +147,143 @@ npm install
 
 ---
 
-## Environment Configuration
-
-Create a `.env` file:
+## 3️⃣ Configure Environment
 
 ```bash
 cp .env.example .env
 ```
 
-Example configuration:
+Edit `.env`:
 
 ```
 POLYGON_TESTNET_RPC=https://rpc-mumbai.maticvigil.com
 POLYGON_MAINNET_RPC=https://polygon-rpc.com
-
 DEPLOYER_PRIVATE_KEY=your_private_key_here
-
 POLYGONSCAN_API_KEY=your_polygonscan_api_key
-
 BACKEND_MINTER_ADDRESS=0x0000000000000000000000000000000000000000
 ```
 
 ---
 
-# 🧪 Development
+# Compile Contracts
 
-## Compile Contracts
-
-```
+```bash
 npm run compile
 ```
 
-## Run Tests
+---
 
-```
+# Run Tests
+
+```bash
 npm test
 ```
 
-## Test Coverage
+Run coverage:
 
-```
+```bash
 npm run test:coverage
 ```
 
 ---
 
-# 🔗 Local Development
+# Deployment
 
-Start a local blockchain:
+### Deploy to Local Hardhat Network
 
-```
+```bash
 npm run node
-```
-
-Deploy contracts locally:
-
-```
 npm run deploy:local
 ```
 
 ---
 
-# 🚀 Deployment
+### Deploy to Polygon Mumbai Testnet
 
-Deploy to Polygon testnet:
-
-```
+```bash
 npm run deploy:testnet
 ```
 
-Verify contracts:
+---
+
+# Project Structure
 
 ```
-npm run verify
-```
-
-Manual verification:
-
-```
-npx hardhat verify --network polygon_testnet CONTRACT_ADDRESS
+SunDevilSync-2.0
+│
+├── contracts
+│   ├── contracts
+│   │   ├── AchievementSBT.sol
+│   │   └── Collectible721.sol
+│   ├── test
+│   ├── scripts
+│   ├── hardhat.config.js
+│   └── package.json
+│
+├── demo
+│   ├── SunDevilSync.mp4
+│   └── SunDevilSync 2.0 Architecture.png
+│
+└── README.md
 ```
 
 ---
 
-# 🧾 Contract Interaction Examples
+# Testing
 
-### Grant Minter Role
+Run the full test suite:
 
-```javascript
-const MINTER_ROLE = await contract.MINTER_ROLE();
-await contract.grantRole(MINTER_ROLE, backendAddress);
-```
-
----
-
-### Mint Achievement
-
-```javascript
-const eventId = ethers.id("event_hackathon_2025");
-const badgeType = ethers.id("badge_attendance");
-
-await achievementSBT.mint(
-  recipientAddress,
-  eventId,
-  badgeType,
-  "ipfs://metadata"
-);
-```
-
----
-
-### Mint Using Permit
-
-```javascript
-await contract.mintWithPermit(
-  recipientAddress,
-  eventId,
-  badgeType,
-  metadataURI,
-  deadline,
-  signature
-);
-```
-
----
-
-### Set Max Supply
-
-```javascript
-await collectible721.setMaxSupply(collectibleType, maxSupply);
-```
-
----
-
-### Revoke Achievement
-
-```javascript
-await achievementSBT.revoke(tokenId, "Fraudulent attendance");
-```
-
----
-
-# 🔐 Security Considerations
-
-## Role Structure
-
-| Role | Responsibility |
-|-----|-----|
-| DEFAULT_ADMIN_ROLE | Contract administration |
-| MINTER_ROLE | Backend minting service |
-| PAUSER_ROLE | Emergency pause |
-| REVOKER_ROLE | Credential revocation |
-
----
-
-## Best Practices
-
-- Use **multisig wallets** for admin roles
-- Protect backend keys using **HSM / KMS**
-- Run full test suite before deployment
-- Monitor contract events
-- Audit contracts before mainnet deployment
-
----
-
-# ⛽ Gas Optimization
-
-Batch minting reduces costs during large events.
-
-Example:
-
-```javascript
-await achievementSBT.batchMint(
-  [addr1, addr2],
-  [eventId, eventId],
-  [badgeType, badgeType],
-  [uri1, uri2]
-);
-```
-
-Estimated Polygon Gas Usage:
-
-| Operation | Gas |
-|------|------|
-| Single Mint | ~150k |
-| Batch Mint (10) | ~800k |
-| Revocation | ~50k |
-
----
-
-# 🧪 Testing
-
-Test coverage includes:
-
-- Access control
-- Minting logic
-- Batch operations
-- Transfer restrictions
-- Revocation system
-- Scarcity controls
-- Permit signature verification
-- Pausability
-
-Run tests:
-
-```
+```bash
+cd contracts
 npm test
+```
+
+Coverage includes:
+
+* Role-based access control
+* Minting logic
+* Transfer restrictions
+* Revocation system
+* Permit signatures
+* Pausability
+* Edge case handling
+
+---
+
+# Security Features
+
+* **EIP-712 Signature Authorization**
+* **Role-Based Access Control**
+* **Transfer Locks (Soulbound NFTs)**
+* **Reentrancy Protection**
+* **Pausable Contracts**
+* **OpenZeppelin Audited Libraries**
+
+---
+
+# NFT Metadata Example
+
+```json
+{
+  "name": "ASU • Hackathon 2025 • Attendance",
+  "description": "Verified on-chain proof of attendance.",
+  "image": "ipfs://<CID>/badge.png",
+  "attributes": [
+    {"trait_type": "event_name", "value": "ASU Hackathon"},
+    {"trait_type": "badge_type", "value": "Attendance"},
+    {"trait_type": "issuer", "value": "SunDevilSync 2.0"}
+  ]
+}
 ```
 
 ---
 
 # 👩‍💻 Author
 
-**Shristi**  
-MS Computer Science  
+**Shristi**
+MS Computer Science
 Arizona State University
 
-Project developed for **SunDevilSync 2.0 – a blockchain-based event management and credential verification platform for higher education**.
+---
+
+**Built with ❤️ for ASU students, by ASU students**
