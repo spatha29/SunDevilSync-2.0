@@ -10,7 +10,7 @@ The platform enables universities and organizations to issue **tamper-proof digi
 
 Project demonstration of the **SunDevilSync 2.0 Gamified Event Portal**
 
-demo/SunDevilSync.mov
+demo/SunDevilSync.mp4
 
 ---
 
