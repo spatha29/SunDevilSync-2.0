@@ -1,7 +1,10 @@
 # SunDevilSync 2.0 – NFT Gamified Event Portal
 
-**Author:** Shristi
-**Program:** MS Computer Science – Arizona State University
+---
+
+## 🏗 Architecture Diagram
+
+![Architecture Diagram](demo/SunDevilSync%202.0%20Architecture.png)
 
 ---
 
@@ -13,13 +16,6 @@ If the video does not load, open it directly:
 👉 [Watch Demo](demo/SunDevilSync.mp4)
 
 ---
-
-## 🏗 Architecture Diagram
-
-![Architecture Diagram](demo/SunDevilSync%202.0%20Architecture.png)
-
----
-
 ## Project Description
 
 SunDevilSync 2.0 is a blockchain-based event management platform that rewards students with verifiable NFT badges for participation in campus events. The system issues non-transferable achievement NFTs for attendance and credentials, while also enabling tradable collectible NFTs for referrals and special events.
@@ -280,7 +276,7 @@ Coverage includes:
 
 # 👩‍💻 Author
 
-**Shristi**
+**Shristi Pathak**
 MS Computer Science
 Arizona State University
 
